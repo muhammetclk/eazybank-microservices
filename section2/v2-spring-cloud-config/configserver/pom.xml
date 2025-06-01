@@ -45,6 +45,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bus-amqp -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+    <version>4.2.1</version>
+	
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-monitor -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-config-monitor</artifactId>
+    <version>4.2.2</version>
+    <scope>runtime</scope>
+</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -64,6 +78,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.4.5</version>
+        <configuration>
+          <to>
+            <image>muhammetcelik56/${project.artifactId}:s2</image>
+          </to>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
 	<repositories>
