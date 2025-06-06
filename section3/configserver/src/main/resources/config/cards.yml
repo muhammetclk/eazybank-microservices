@@ -1,0 +1,14 @@
+
+
+build:
+  version: 3.0
+
+
+cards:
+  message: "Welcome to EazyBank cards related local APIs "
+  contactDetails:
+    name: "card Doe - Developer"
+    email: "cardohn@eazybank.com"
+  onCallSupport:
+    - (555) 550-4321
+    - (555) 523-7894
