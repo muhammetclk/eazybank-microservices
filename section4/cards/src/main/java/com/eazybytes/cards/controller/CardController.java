@@ -42,6 +42,7 @@ import jakarta.validation.constraints.Pattern;
 @Validated
 public class CardController {
 
+        @Autowired
         private ICardService cardService;
 
           @Value("${build.version}")
