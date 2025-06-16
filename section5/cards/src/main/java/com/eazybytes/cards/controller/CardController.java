@@ -1,5 +1,7 @@
 package com.eazybytes.cards.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +57,8 @@ public class CardController {
         @Autowired
         CardContactInfoDto cardContactInfoDto;
 
+        private static final Logger logger = LoggerFactory.getLogger(CardController.class);
+
         @Operation(summary = "Create Card REST API", description = "REST API to create new Card inside EazyBank")
         @ApiResponses({
                         @ApiResponse(responseCode = "201", description = "HTTP Status CREATED"),
@@ -75,9 +80,13 @@ public class CardController {
         })
         @GetMapping("/fetch")
         public ResponseEntity<CardDto> fetchCardDetails(
+                @RequestHeader("eazybank-correlation-id") String correlationId,
                         @RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
-                CardDto cardDto = cardService.fetchCard(mobileNumber);
-                return ResponseEntity.status(HttpStatus.OK).body(cardDto);
+                
+                                 logger.debug("EazyBank card correlation id: {}", correlationId);
+                                CardDto cardDto = cardService.fetchCard(mobileNumber);
+                
+                                return ResponseEntity.status(HttpStatus.OK).body(cardDto);
         }
 
         @Operation(summary = "Update Card Details REST API", description = "REST API to update card details based on a card number")
