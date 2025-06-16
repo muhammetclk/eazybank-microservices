@@ -40,3 +40,4 @@ logging:
     com:
       eazytbytes:
         gatewayserver: DEBUG
+
