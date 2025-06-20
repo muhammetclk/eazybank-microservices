@@ -1,5 +1,7 @@
 package com.eazybytes.accounts.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -22,6 +24,7 @@ import com.eazybytes.accounts.dto.ErrorResponseDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountService;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -49,6 +52,8 @@ public class AccountController {
 
         @Autowired
         private AccountContactInfoDto accountContactInfoDto;
+
+        private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
         @Operation(summary = "Create Account Rest api", description = "Create Account Rest api in EazyBank to Create accounts")
         @ApiResponses({
@@ -117,15 +122,28 @@ public class AccountController {
                 }
         }
 
+
+
+        
         @Operation(summary = "Get Build Info REST API", description = "REST API to get build info")
         @ApiResponses({
                         @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
                         @ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
         })
+        @Retry(name = "getBuildInfo", fallbackMethod = "getBuildInfoFallback")
         @GetMapping("/build-info")
         public ResponseEntity<String> getBuildInfo() {
+                logger.debug(" Invoked EazyBank account build info");
                 return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
         }
+
+         public ResponseEntity<String> getBuildInfoFallback(Throwable throwable) {
+                
+                logger.debug(" Invoked EazyBank account build info fallback");
+                return ResponseEntity.status(HttpStatus.OK).body("0.9");
+
+
+         }
 
         @Operation(summary = "Get Java version REST API", description = "REST API to get java version")
         @ApiResponses({

@@ -161,6 +161,7 @@ public class LoanController {
         })
         @GetMapping("/contact-info")
         public ResponseEntity<LoanContactInfoDto> getContactInfo() {
+                logger.debug(" Invoked EazyBank loan contact info");
                 return ResponseEntity.status(HttpStatus.OK).body(loanContactInfoDto);
         }
 
