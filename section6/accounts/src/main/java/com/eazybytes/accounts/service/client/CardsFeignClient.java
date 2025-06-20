@@ -10,7 +10,7 @@ import com.eazybytes.accounts.dto.CardDto;
 
 
 
-@FeignClient(name = "cards")
+@FeignClient(name = "cards",fallback = CardsFallback.class)
 public interface CardsFeignClient {
 
 
