@@ -80,7 +80,7 @@
         <version>3.4.5</version>
         <configuration>
           <to>
-            <image>muhammetcelik56/${project.artifactId}:s5</image>
+            <image>muhammetcelik56/${project.artifactId}:s6</image>
           </to>
         </configuration>
       </plugin>
