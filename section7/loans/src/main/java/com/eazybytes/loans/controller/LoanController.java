@@ -80,9 +80,9 @@ public class LoanController {
                 @RequestHeader("eazybank-correlation-id") String correlationId,
                         @RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
               
-                                logger.debug("EazyBank loan correlation id: {}", correlationId);
+                                logger.debug("fetchLoanDetails method started");
                                 LoanDto loanDto = loanService.fetchLoan(mobileNumber);
-              
+                                logger.debug("fetchLoanDetails method end");
                                 return ResponseEntity.status(HttpStatus.OK).body(loanDto);
         }
 

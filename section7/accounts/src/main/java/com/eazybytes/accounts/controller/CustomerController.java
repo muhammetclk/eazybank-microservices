@@ -51,9 +51,10 @@ public class CustomerController {
     @RequestHeader("eazybank-correlation-id") String correlationId,  
     @RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits") String mobileNumber) {
       
-        logger.debug("EazyBank account-customercontroller correlation id: {}", correlationId);
+        logger.debug("FetchCustomerDetails method started");
         
         CustomerDetailsDto customerDetailsDto = customerService.fetchCustomerDetails(mobileNumber,correlationId);
+        logger.debug("FetchCustomerDetails method end");
         return ResponseEntity.status(HttpStatus.OK).body(customerDetailsDto);
     }
     
